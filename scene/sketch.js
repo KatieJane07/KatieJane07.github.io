@@ -7,11 +7,11 @@
 
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(500, 500);
 }
 
 function draw() {
-  background(220);
+  background(175,144,214);
   fill(123,123,213);
-  circle(mouseX,mouseY,10);
+  circle(mouseX,mouseY,30);
 }
