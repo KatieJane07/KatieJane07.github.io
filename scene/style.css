@@ -43,21 +43,6 @@ body {
   background-color: #C2BBF0;
 }
 
-#testing {
-  background-image: url(ducks.jpg);
-  background-size: 100%;
-}
-
-.testing {
-  color: #576490;
-  background-color: #576490;
-}
-
-.testing:hover {
-  color: #DCEED1;
-  transform: matrix(0.1, 1, -0.3, 1, 0, 0);
-  transition: transform 5s;
-}
 
 img.testing {
   transform: matrix(0.1, 1, -0.3, 1, 0, 0);
@@ -111,37 +96,3 @@ img {
   transition: all 20s;
 }
 
-#fan:hover {
-  transform: rotate(36000deg);
-}
-
-#spiral:hover {
-  transform: rotate(70000deg) scale(2000%);
-  transition: all 200s linear;
-}
-
-.center {
-  text-align: center;
-}
-
-#Party:hover {
-  filter: hue-rotate(10000deg);
-  transition: all 5sec;
-}
-
-#Nature {
-  background-image: url(mountain.jpg);
-  background-size: 100%;
-  color: #313628;
-}
-
-#Nature p {
-  background: #CADF9E;
-  padding: 10px;
-  margin-right: 940px;
-}
-
-.silly {
-  color: #576490;
-  background-color: #576490;
-}

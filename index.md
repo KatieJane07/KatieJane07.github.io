@@ -2,6 +2,7 @@
 
 ## Demos
 - [Square Controls](squire)
+- [Image](image)
 
 
 ## Projects
