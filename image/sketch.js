@@ -4,7 +4,7 @@
 let sb;
 
 function preload(){
-  sb = loadImage("Bob.png")
+  sb = loadImage("Bob.png");
 }
 
 function setup() {
@@ -13,5 +13,5 @@ function setup() {
 
 function draw() {
   background(220);
-  image(sb, mouseX, mouseY)
+  image(sb, mouseX, mouseY);
 }
