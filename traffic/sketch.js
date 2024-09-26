@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-}
-
-function draw() {
-  background(220);
-}
-=======
 // Traffic Light Starter Code
 // Katie Strawson
 // Sept 24
@@ -93,4 +76,3 @@ function drawOutlineOfLights() {
   fill(go);
   ellipse(width/2, height/2 + 65, 50, 50); //bottom
 }
->>>>>>> 57d598a8a072638fd87f376919382bb5b06ad29e
