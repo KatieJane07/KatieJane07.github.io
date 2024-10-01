@@ -6,6 +6,8 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+
+// Variables !!
 let x=0;
 let y=0;
 let sqr=100;
@@ -27,6 +29,8 @@ function draw() {
   background(123,234,254);
   drawOutlineOfLights();
   squaremove();
+  LightSwitch();
+
   //green
   if (light === 2){
     if (millis()>lastswitch+time){
@@ -46,7 +50,7 @@ function draw() {
 }
 
 function drawOutlineOfLights() {
-  //box
+  //Light Colours
   if (light === 1){
     RedLight = "red";
     GreenLight = "white";
@@ -59,7 +63,7 @@ function drawOutlineOfLights() {
   rectMode(CENTER);
   fill(0);
 
-  //lights
+  //lights outline
   fill(RedLight);
   ellipse(width/2, height/2 - 65, 50, 50); //top
 
@@ -68,6 +72,13 @@ function drawOutlineOfLights() {
 }
 
 function squaremove(){
+  //
+  if (keyIsPressed){
+    speed = 10;
+  }
+  else{
+    speed=0;
+  }
   fill(235,81,94);
   rect(x,y,sqr,sqr);
   if (state === 1){
@@ -99,4 +110,17 @@ function squaremove(){
   }
   
 
+}
+
+function LightSwitch(){
+  if (light===1){
+    if (keyIsPressed){
+      endsequence()
+    }
+  }
+
+}
+
+function endsequence(){
+  background(0);
 }
