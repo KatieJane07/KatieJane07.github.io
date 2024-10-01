@@ -4,7 +4,8 @@
 // Oct 1
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// - html website
+// - js button
 
 
 // Variables !!
@@ -18,7 +19,7 @@ let RedLight;
 let GreenLight;
 let lastswitch = 0;
 let time= 5000;
-
+let score = 0;
 
 function setup() {
   createCanvas(500, 500);
@@ -31,6 +32,8 @@ function draw() {
   squaremove();
   LightSwitch();
 
+  text(score, width/2, height/2);
+
   //green
   if (light === 2){
     if (millis()>lastswitch+time){
@@ -39,7 +42,7 @@ function draw() {
       time = random(200,6000);
     }
   }
-  //red
+  //red 
   if (light === 1){
     if (millis()>lastswitch+time){
       light = 2;
@@ -59,8 +62,7 @@ function drawOutlineOfLights() {
     RedLight = "white";
     GreenLight = "green";
   }
- 
-  rectMode(CENTER);
+
   fill(0);
 
   //lights outline
@@ -72,15 +74,19 @@ function drawOutlineOfLights() {
 }
 
 function squaremove(){
-  //
+  // square only moves with keyboard input
   if (keyIsPressed){
     speed = 10;
   }
   else{
     speed=0;
   }
+
+  // makes square
   fill(235,81,94);
   rect(x,y,sqr,sqr);
+
+  //square moves around the boarder
   if (state === 1){
     x+=speed;
     if (x===width-sqr){
@@ -113,14 +119,19 @@ function squaremove(){
 }
 
 function LightSwitch(){
-  if (light===1){
-    if (keyIsPressed){
-      endsequence()
+  //red light green light scoring
+  if (keyIsPressed){
+    if (light === 1){
+      endsequence();
+    }
+    if (light === 2){
+      score += 1;
     }
   }
+} 
 
-}
-
+ 
 function endsequence(){
   background(0);
+  score = 0;
 }
