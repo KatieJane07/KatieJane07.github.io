@@ -6,6 +6,8 @@
 // Extra for Experts:
 // - html website
 // - js button
+//
+//i hope the html is unneeding of comments bcs i cant remember the tag to make them and theres like 5 lines of code
 
 
 // Variables !!
@@ -27,11 +29,13 @@ function setup() {
 }
 
 function draw() {
+  //functionssss
   background(123,234,254);
   drawOutlineOfLights();
   squaremove();
   LightSwitch();
 
+  //display score
   text(score, width/2, height/2);
 
   //green
