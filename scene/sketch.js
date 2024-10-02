@@ -79,7 +79,7 @@ function drawOutlineOfLights() {
 
 function squaremove(){
   // square only moves with keyboard input
-  if (keyIsPressed){
+  if (mouseIsPressed){
     speed = 10;
   }
   else{
@@ -124,7 +124,7 @@ function squaremove(){
 
 function LightSwitch(){
   //red light green light scoring
-  if (keyIsPressed){
+  if (mouseIsPressed){
     if (light === 1){
       endsequence();
     }
