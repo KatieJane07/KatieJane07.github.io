@@ -1,6 +1,8 @@
 // Fly swatter
 //Katie
-
+//idea: different cricles of different colours, some go faster, 
+//to get points hold on to the circle, different colours
+//have different speeds
 
 let circleX;
 let circleY;
