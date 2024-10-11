@@ -4,42 +4,66 @@
 //to get points hold on to the circle, different colours
 //have different speeds
 
-let circleX;
-let circleY;
-let time = 1;
-let flies = [];
-let killable;
-let circles = true;
-let triangles = false;
+let targets = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  circleX = width/2;
-  circleY = height/2;
+  for(let i = 0; i < 5; i++){
+    spawnTarget();
+  }
+
 }
 
 function draw() {
-  background(144,253,211);
+  background(124,53,144);
+  moveTargets();
+  displayTarget();
 
-  circleX = noise(time) * width;
-  circleY = noise(time + 3) * height;
-  time+=0.005;
-
-  if (circles === true){
-    circle(circleX,circleY, 50, killable = true);
-  }
-
-  if (mouseIsPressed && (mouseY <= circleY + 50 && mouseY >= circleY - 50) && (mouseX <= circleX + 50 && mouseX >= circleX - 50) ) {
-    if (killable === true){
-      dead();
-    }
-  }
 }
 
-function dead(){
-  triangles = true;
-  if (triangles === true){
-    triangle(circleX, circleY+50,circleX-50, circleY-50, circleX+50,circleY-50);
+
+function spawnTarget(){
+  let someTarget = {
+    x: width/2,
+    y: height/2,
+    timeX:random(100000000),
+    timeY:random(100000000),
+    deltaTime: 0.002,
+
+  };
+
+  let choice = random(100);
+  if (choice < 30) {
+    someTarget.colour = "red";
+    someTarget.radius = 30;
+    someTarget.deltaTime = 0.002;
   }
-  circles = false;
+  else{
+    someTarget.colour = "blue";
+    someTarget.radius = 10;
+    someTarget.deltaTime = 0.002;
+  }
+
+  targets.push(someTarget);
+
+}
+
+function moveTargets(){
+  for (let target of targets) {
+    let x = noise(target.timeX)*width;
+    let y = noise(target.timeY)*height;
+    target.x = x;
+    target.y = y;
+
+    target.timeX += target.deltaTime;
+    target.timeY += target.deltaTime;
+  }
+
+}
+
+function displayTarget(){
+  for( let target of targets){
+    fill(target.colour);
+    circle(target.x, target.y, target.radius*2);
+  }
 }
