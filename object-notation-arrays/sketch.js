@@ -1,14 +1,16 @@
-// Fly swatter
+// 
 //Katie
 //idea: different cricles of different colours, some go faster, 
 //to get points hold on to the circle, different colours
 //have different speeds
 
-let targets = [];
+let targetArray = [];
+let points = 0;
+let someTarget;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for(let i = 0; i < 5; i++){
+  for(let i = 0; i < 8; i++){
     spawnTarget();
   }
 
@@ -18,12 +20,17 @@ function draw() {
   background(124,53,144);
   moveTargets();
   displayTarget();
+  displayPoints();
 
 }
 
+function displayPoints(){
+  fill(0);
+  text(points, 100, 100);
+}
 
 function spawnTarget(){
-  let someTarget = {
+  someTarget = {
     x: width/2,
     y: height/2,
     timeX:random(100000000),
@@ -36,20 +43,22 @@ function spawnTarget(){
   if (choice < 30) {
     someTarget.colour = "red";
     someTarget.radius = 30;
-    someTarget.deltaTime = 0.002;
+    someTarget.deltaTime = 0.009;
+    someTarget.pointsRating = 100;
   }
   else{
     someTarget.colour = "blue";
     someTarget.radius = 10;
     someTarget.deltaTime = 0.002;
+    someTarget.pointsRating = 5;
   }
 
-  targets.push(someTarget);
+  targetArray.push(someTarget);
 
 }
 
 function moveTargets(){
-  for (let target of targets) {
+  for (let target of targetArray) {
     let x = noise(target.timeX)*width;
     let y = noise(target.timeY)*height;
     target.x = x;
@@ -62,8 +71,29 @@ function moveTargets(){
 }
 
 function displayTarget(){
-  for( let target of targets){
+  for( let target of targetArray){
     fill(target.colour);
     circle(target.x, target.y, target.radius*2);
+  }
+}
+
+function mousePressed(){
+  for(let target of targetArray){
+    if (clickedInTarget(mouseX,mouseY,target)) {
+      let theIndex = targetArray.indexOf(target);
+      points = points + someTarget.pointsRating;
+
+
+    }
+  }
+}
+
+function clickedInTarget(x,y,theTarget){
+  let distanceAway = dist(x, y,theTarget.x, theTarget.y);
+  if (distanceAway < theTarget.radius){
+    return true;
+  }
+  else{
+    return false;
   }
 }
