@@ -7,25 +7,55 @@
 let targetArray = [];
 let points = 0;
 let someTarget;
+let r;
+let g;
+let b;
+let state = 1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for(let i = 0; i < 8; i++){
     spawnTarget();
   }
-
+  r = 235;
+  g = 52;
+  b = 52;
 }
 
 function draw() {
-  background(124,53,144);
+  changeBackground();   
   moveTargets();
   displayTarget();
-  displayPoints();
-
+  displayPoints(); 
 }
 
+function changeBackground(){
+  if (keyIsPressed){
+    if (state === 1){
+      for (let i = 52; i<235; i++){
+        g = i;
+      }
+      state = 2;
+    }
+    if ( state === 2){
+      for (let i = 235; i>52; i--){
+        r = i;
+      }
+      state = 3;
+    }
+    if (state === 3){
+      for (let i = 52; i<235; i++){
+        b = i;
+      }
+      state = 4;
+    }
+  }  
+  background(r,g,b);
+}
 function displayPoints(){
   fill(0);
+  strokeWeight(4);
+  textSize(30);
   text(points, 100, 100);
 }
 
@@ -43,7 +73,7 @@ function spawnTarget(){
   if (choice < 30) {
     someTarget.colour = "red";
     someTarget.radius = 30;
-    someTarget.deltaTime = 0.009;
+    someTarget.deltaTime = 0.001;
     someTarget.pointsRating = 100;
   }
   else{
@@ -81,9 +111,15 @@ function mousePressed(){
   for(let target of targetArray){
     if (clickedInTarget(mouseX,mouseY,target)) {
       let theIndex = targetArray.indexOf(target);
-      points = points + someTarget.pointsRating;
+      if (minute() === 14){
+        if (target.colour === "red"){
+          points += 5;
+        }
+        else{
+          points += 10;
+        }
 
-
+      }
     }
   }
 }
