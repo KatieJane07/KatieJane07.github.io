@@ -23,34 +23,39 @@ function setup() {
 }
 
 function draw() {
-  changeBackground();   
+  window.setInterval(changeBackground(), 1000);   
   moveTargets();
   displayTarget();
   displayPoints(); 
 }
 
 function changeBackground(){
+  background(r,g,b);
   if (keyIsPressed){
     if (state === 1){
       for (let i = 52; i<235; i++){
         g = i;
+        background(r,g,b);
+        let timer = millis();
+        while (millis() - timer < 2) {}
       }
       state = 2;
     }
-    if ( state === 2){
+    else if ( state === 2){
       for (let i = 235; i>52; i--){
         r = i;
+        background(r,g,b);
       }
       state = 3;
     }
-    if (state === 3){
+    else if (state === 3){
       for (let i = 52; i<235; i++){
         b = i;
+        background(r,g,b);
       }
       state = 4;
     }
   }  
-  background(r,g,b);
 }
 function displayPoints(){
   fill(0);
