@@ -7,56 +7,58 @@
 let targetArray = [];
 let points = 0;
 let someTarget;
-let r;
-let g;
-let b;
-let state = 1;
+//let r;
+//let g;
+//let b;
+//let state = 1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for(let i = 0; i < 8; i++){
     spawnTarget();
   }
-  r = 235;
-  g = 52;
-  b = 52;
+ //r = 235;
+ //g = 52;
+ // b = 52;
 }
 
 function draw() {
-  window.setInterval(changeBackground(), 1000);   
+  //window.setInterval(changeBackground(), 1000);  
+  background(111,222,123);
   moveTargets();
   displayTarget();
   displayPoints(); 
 }
 
-function changeBackground(){
-  background(r,g,b);
-  if (keyIsPressed){
-    if (state === 1){
-      for (let i = 52; i<235; i++){
-        g = i;
-        background(r,g,b);
-        let timer = millis();
-        while (millis() - timer < 2) {}
-      }
-      state = 2;
-    }
-    else if ( state === 2){
-      for (let i = 235; i>52; i--){
-        r = i;
-        background(r,g,b);
-      }
-      state = 3;
-    }
-    else if (state === 3){
-      for (let i = 52; i<235; i++){
-        b = i;
-        background(r,g,b);
-      }
-      state = 4;
-    }
-  }  
-}
+// function changeBackground(){
+//   background(r,g,b);
+//   if (keyIsPressed){
+//     if (state === 1){
+//       for (let i = 52; i<235; i++){
+//         g = i;
+//         background(r,g,b);
+//         let timer = millis();
+//         while (millis() - timer < 2) {}
+//       }
+//       state = 2;
+//     }
+//     else if ( state === 2){
+//       for (let i = 235; i>52; i--){
+//         r = i;
+//         background(r,g,b);
+//       }
+//       state = 3;
+//     }
+//     else if (state === 3){
+//       for (let i = 52; i<235; i++){
+//         b = i;
+//         background(r,g,b);
+//       }
+//       state = 4;
+//     }
+//   }  
+
+
 function displayPoints(){
   fill(0);
   strokeWeight(4);
