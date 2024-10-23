@@ -8,7 +8,7 @@
 
 let grid;
 let cellSize;
-const GRID_SIZE = 6;
+const GRID_SIZE = 20;
 
 function setup() {
   if ( windowWidth < windowHeight) {
@@ -20,6 +20,16 @@ function setup() {
   cellSize = height/GRID_SIZE;
 
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
+}
+
+function windowResized() {
+  if ( windowWidth < windowHeight) {
+    resizeCanvas(windowWidth, windowWidth);
+  }
+  else {
+    resizeCanvas(windowHeight, windowHeight);
+  }
+  cellSize = height/GRID_SIZE;
 }
 
 function draw() {
@@ -37,12 +47,33 @@ function keyPressed() {
   }
 }
 
-function mousePressed(){
+function mousePressed() {
+  let x = Math.floor(mouseX/cellSize);
+  let y = Math.floor(mouseY/cellSize);
   
-
+  toggleCell(x,y);
+  toggleCell(x+1,y);
+  toggleCell(x-1,y);
+  toggleCell(x,y+1);
+  toggleCell(x,y-1);
+  
 }
 
-function displayGrid(){
+function toggleCell(x,y) {
+  if (x >= 0 && x < GRID_SIZE && y >=0 && y < GRID_SIZE) {
+    if (grid[y][x] === 1) {
+      grid[y][x] = 0;
+    }
+    else {
+      grid[y][x] = 1;
+    }
+  }
+
+  
+}
+
+
+function displayGrid() {
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {
       if (grid[y][x] === 1) {
