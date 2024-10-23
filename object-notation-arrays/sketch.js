@@ -9,7 +9,7 @@ let points = 0;
 let someTarget;
 let state = 1;
 let currentTime;
-let gameTime = 5000;
+let gameTime = 4000;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -73,14 +73,14 @@ function timer(){
 
   if (currentTime < 0){
     finalScore = points;
-    if (finalScore > 50){
+    if (finalScore > 80){
       text("YOU WIN",width/2,height/2);
-      text(finalScore, width/2, height/2-50);
     }
     else{
       text("you lose", width/2, height/2);
-      text(finalScore, width/2, height/2 - 50);
     }
+    text(finalScore, width/2, height/2-50);
+    text("reload the page to play again", width/2 - 50, height/2 +50)
   }
 }
 
@@ -98,7 +98,7 @@ function spawnTarget(){
   if (choice < 30) {
     someTarget.colour = "red";
     someTarget.radius = 30;
-    someTarget.deltaTime = 0.001;
+    someTarget.deltaTime = 0.02;
     someTarget.pointsRating = 100;
   }
   else{
@@ -136,15 +136,15 @@ function mousePressed(){
   for(let target of targetArray){
     if (clickedInTarget(mouseX,mouseY,target)) {
       let theIndex = targetArray.indexOf(target);
-      //if (minute() === 14){
-      if (target.colour === "red"){
-        points += 5;
-      }
-      else{
-        points += 10;
-      }
+      if(currentTime > 0){
+        if (target.colour === "red"){
+          points += 10;
+        }
+        else{
+          points += 5;
+        }
 
-      //}
+      }
     }
   }
 }
