@@ -10,6 +10,7 @@
 - [Terrain Generation](terrain-gen)
 - [Bubble Pop](bubble)
 - [trnalsate/rotate](translate)
+- [grid demo](2d-array)
 
 
 ## Projects
