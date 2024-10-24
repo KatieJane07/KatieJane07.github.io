@@ -1,28 +1,35 @@
-// 
-//Katie
+// Katie Strawson
+//October 23
 //idea: different cricles of different colours, some go faster, 
-//to get points hold on to the circle, different colours
+//to get points click the circle, different colours
 //have different speeds
+//Extra for experts
+//the timer 
+//different properties within an array
 
 let targetArray = [];
 let points = 0;
 let someTarget;
-let state = 1;
+//let state = 1;
 let currentTime;
-let gameTime = 4000;
+
+//total milliseconds of the game
+let gameTime = 41000;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for(let i = 0; i < 8; i++){
     spawnTarget();
   }
+
   //r = 235;
   //g = 52;
   //b = 52;
 }
 
 function draw() {
-  //window.setInterval(changeBackground(), 1000);   
+  //window.setInterval(changeBackground(), 1000);  
+
   background(132,244,253);
   moveTargets();
   displayTarget();
@@ -30,6 +37,7 @@ function draw() {
   timer();
 }
 
+//code that was supposed to make the background change colour but did not end up working
 //function changeBackground(){
 //    background(r,g,b);
 //  if (keyIsPressed){
@@ -63,24 +71,37 @@ function displayPoints(){
   fill(0);
   strokeWeight(4);
   textSize(30);
-  text(points, 100, 100);
+
+  if (currentTime > 0){
+    text(points, 100, 100);
+  }
 }
 
 function timer(){
   currentTime = gameTime - millis();
   currentTime= currentTime/1000;
-  text(Math.trunc(currentTime), 100, 400);
 
+  if (currentTime > 0){
+    text(Math.trunc(currentTime), 100, 400);
+  }
+  
+
+  //game end display
+  textAlign(CENTER, CENTER)
   if (currentTime < 0){
+
     finalScore = points;
+
     if (finalScore > 80){
+
       text("YOU WIN",width/2,height/2);
     }
     else{
       text("you lose", width/2, height/2);
     }
-    text(finalScore, width/2, height/2-50);
-    text("reload the page to play again", width/2 - 50, height/2 +50)
+    text(finalScore, width/2, height/2 - 50);
+    text("reload the page to play again", width/2, height/2 +50, )
+
   }
 }
 
@@ -94,18 +115,17 @@ function spawnTarget(){
 
   };
 
+  //randomize red or blue targets
   let choice = random(100);
-  if (choice < 30) {
+  if (choice < 50) {
     someTarget.colour = "red";
     someTarget.radius = 30;
     someTarget.deltaTime = 0.02;
-    someTarget.pointsRating = 100;
   }
   else{
     someTarget.colour = "blue";
     someTarget.radius = 10;
-    someTarget.deltaTime = 0.002;
-    someTarget.pointsRating = 5;
+    someTarget.deltaTime = 0.002
   }
 
   targetArray.push(someTarget);
@@ -132,6 +152,7 @@ function displayTarget(){
   }
 }
 
+//if mouse is pressed and is on a circle, awards points based on colour
 function mousePressed(){
   for(let target of targetArray){
     if (clickedInTarget(mouseX,mouseY,target)) {
@@ -149,6 +170,7 @@ function mousePressed(){
   }
 }
 
+//checks if circle was clicked
 function clickedInTarget(x,y,theTarget){
   let distanceAway = dist(x, y,theTarget.x, theTarget.y);
   if (distanceAway < theTarget.radius){
