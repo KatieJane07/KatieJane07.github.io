@@ -87,7 +87,7 @@ function timer(){
   
 
   //game end display
-  textAlign(CENTER, CENTER)
+  textAlign(CENTER, CENTER);
   if (currentTime < 0){
 
     finalScore = points;
@@ -100,7 +100,7 @@ function timer(){
       text("you lose", width/2, height/2);
     }
     text(finalScore, width/2, height/2 - 50);
-    text("reload the page to play again", width/2, height/2 +50, )
+    text("reload the page to play again", width/2, height/2 +50, );
 
   }
 }
@@ -125,7 +125,7 @@ function spawnTarget(){
   else{
     someTarget.colour = "blue";
     someTarget.radius = 10;
-    someTarget.deltaTime = 0.002
+    someTarget.deltaTime = 0.002;
   }
 
   targetArray.push(someTarget);
