@@ -120,7 +120,7 @@ function spawnTarget(){
   if (choice < 50) {
     someTarget.colour = "red";
     someTarget.radius = 30;
-    someTarget.deltaTime = 0.02;
+    someTarget.deltaTime = 0.009;
   }
   else{
     someTarget.colour = "blue";
@@ -159,10 +159,10 @@ function mousePressed(){
       let theIndex = targetArray.indexOf(target);
       if(currentTime > 0){
         if (target.colour === "red"){
-          points += 10;
+          points += 3;
         }
         else{
-          points += 5;
+          points += 1;
         }
 
       }
