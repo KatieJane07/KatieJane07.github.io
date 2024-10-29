@@ -13,6 +13,7 @@
 - [grid demo](2d-array)
 - [game of life](game-of-life)
 - [rectangular grid](rect-grid)
+- [moving character in grid](moving-grid)
 
 
 ## Projects
