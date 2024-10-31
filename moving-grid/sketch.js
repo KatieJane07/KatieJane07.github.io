@@ -70,15 +70,11 @@ function movePlayer(x, y) {
     thePlayer.x = x;
     thePlayer.y = y;
   
-    //grid[oldY][oldX] = OPEN_TILE;
+    grid[oldY][oldX] = OPEN_TILE;
     grid[thePlayer.y][thePlayer.x] = PLAYER;
   
-    grid[thePlayer.y][thePlayer.x] = PLAYER;
     
   }
-  // if (grid[thePlayer.y][thePlayer.x] === CLOSED_TILE || grid[thePlayer.y][thePlayer.x] === PLAYER) {
-  //   isAlive = false;
-  // }
 }
 
 function mousePressed() {

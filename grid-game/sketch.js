@@ -1,25 +1,33 @@
-// Character Grid demo
+// Snake
+// Katie Strawson
+// November 8th 2024
+// Extra for Experts
+// uhmmmmm
 
 let grid;
-let circleImg;
 let rows;
 let cols;
-const GRID_SIZE = 50;
-const OPEN_TILE = 0;
-const CLOSED_TILE = 1;
-const HEAD = 7;
-const FOOD = 9;
-const BODY = 8;
+let foodX;
+let foodY;
+let appleImg;
+let circleImg;
 let length = 0;
+let direction = 1;
+let isAlive = true;
 let thePlayer = {
   x: 0,
   y: 0,
 };
-let isAlive = true;
-let direction = 1;
+const HEAD = 7;
+const FOOD = 9;
+const BODY = 8;
+const OPEN_TILE = 0;
+const GRID_SIZE = 50;
+const CLOSED_TILE = 1;
 
 function preload() {
   circleImg = loadImage("circle.png");
+  appleImg = loadImage("apple.png");
 }
 
 function setup() {
@@ -30,13 +38,17 @@ function setup() {
   //speed adjust
   frameRate(3);
   grid[thePlayer.y][thePlayer.x] = HEAD;
+  generateFood();
 }
-
 
 function draw() {
   background(144,231,244);
   displayGrid();
+  snakeMoving();
+}
 
+function snakeMoving() {
+  //keeps the snake moving that direction
   if (direction === 1) {
     movePlayer(thePlayer.x + 1 , thePlayer.y);
   }
@@ -51,15 +63,13 @@ function draw() {
   }
 
   if (isAlive === false) {
+    //end sequence
     fill(0);
     text("loser", 200, 200);
   }
 }
 
 function keyPressed() {
-  if (key === "e") {
-    generateEmptyGrid(cols,rows);
-  }
   if (key === "w") {
     direction = 2;
   }
@@ -79,10 +89,22 @@ function movePlayer(x, y) {
   let oldY = thePlayer.y;
   thePlayer.x = x;
   thePlayer.y = y;
-  //grid[oldY][oldX] = OPEN_TILE;
+  grid[oldY][oldX] = OPEN_TILE;
   grid[thePlayer.y][thePlayer.x] = HEAD;
   
+  //check if the player is on the same square as the food
+  if (foodX === thePlayer.x && foodY === thePlayer.y) {
+    length += 1;
+    generateFood();
+  }
+
+  //checks if player runs into itself
+  // if player.x and player. y equals any body x y
+  //isAlive = false;
+
+  //checks if player is in bounds
   if (x < 0 || y > rows || x > cols || y < 0) {
+    //causes death
     isAlive = false;
   }
 }
@@ -104,8 +126,8 @@ function displayGrid() {
         //fill(234,244,255);
       }
       else if (grid[y][x] === FOOD) {
-        fill(184,122,135);
-        square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
+        image(appleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        //fill(184,122,135);
       }
     }
   }
@@ -122,8 +144,10 @@ function generateEmptyGrid(cols, rows) {
   return newGrid;
 }
 
-function eatFood() {
-  //generate 1 2 or 3 bits of food
-  
-  //if head touches food length += 1
+
+function generateFood() {
+  //chooses a random square to place food
+  foodX = Math.floor(random(width)/GRID_SIZE);
+  foodY = Math.floor(random(height)/GRID_SIZE);
+  grid[foodY][foodX] = FOOD;
 }
