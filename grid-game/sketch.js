@@ -11,8 +11,9 @@ let foodX;
 let foodY;
 let appleImg;
 let circleImg;
+let difficulty; //maybe
 let length = 0;
-let direction = 1;
+let direction = 4;
 let isAlive = true;
 let thePlayer = {
   x: 0,
@@ -38,6 +39,7 @@ function setup() {
   //speed adjust
   frameRate(3);
   grid[thePlayer.y][thePlayer.x] = HEAD;
+  //for (i=0; i < number of food; i++){
   generateFood();
 }
 
@@ -113,7 +115,7 @@ function displayGrid() {
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       if (grid[y][x] === CLOSED_TILE) {
-        //obsticles
+        //obsticles ??
         fill(241,253,124);
         square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
       }
@@ -128,6 +130,9 @@ function displayGrid() {
       else if (grid[y][x] === FOOD) {
         image(appleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
         //fill(184,122,135);
+      }
+      else if (grid[y][x] === BODY) {
+        fill(255,0,0);
       }
     }
   }
