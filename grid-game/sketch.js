@@ -87,13 +87,24 @@ function keyPressed() {
 }
 
 function movePlayer(x, y) {
-  let oldX = thePlayer.x;
-  let oldY = thePlayer.y;
-  thePlayer.x = x;
-  thePlayer.y = y;
-  grid[oldY][oldX] = OPEN_TILE;
-  grid[thePlayer.y][thePlayer.x] = HEAD;
-  
+  console.log("moving to:", x, y);
+  console.log(x, y, rows, cols);
+  //checks if snake is in bounds
+  if (x < 0 || y > rows - 1 || x > cols || y < 0) {
+    //causes death
+    isAlive = false;
+  }
+
+  else {
+    //move snake
+    let oldX = thePlayer.x;
+    let oldY = thePlayer.y;
+    thePlayer.x = x;
+    thePlayer.y = y;
+    grid[oldY][oldX] = OPEN_TILE;
+    grid[thePlayer.y][thePlayer.x] = HEAD;
+  }
+
   //check if the player is on the same square as the food
   if (foodX === thePlayer.x && foodY === thePlayer.y) {
     length += 1;
@@ -104,11 +115,6 @@ function movePlayer(x, y) {
   // if player.x and player. y equals any body x y
   //isAlive = false;
 
-  //checks if player is in bounds
-  if (x < 0 || y > rows || x > cols || y < 0) {
-    //causes death
-    isAlive = false;
-  }
 }
 
 function displayGrid() {
