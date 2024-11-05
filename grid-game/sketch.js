@@ -1,8 +1,15 @@
 // Snake
 // Katie Strawson
-// November 8th 2024
+// November 12th 2024
 // Extra for Experts
 // uhmmmmm
+
+//to do
+// add body length increase
+// add collisions with body
+// add start screen 
+// music, difficulty, start, how to play
+// html elements for start screen
 
 let grid;
 let rows;
@@ -13,6 +20,10 @@ let appleImg;
 let circleImg;
 let difficulty; //maybe
 let length = 0;
+//snake is an array, when length increases one less element 
+//is turned into an open tile
+//how would collisions work
+let snake = [];
 let direction = 4;
 let isAlive = true;
 let thePlayer = {
