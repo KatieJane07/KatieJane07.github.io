@@ -10,20 +10,32 @@
 // add start screen 
 // music, difficulty, start, how to play
 // html elements for start screen
+// random fruit selects once
 
 let grid;
 let rows;
 let cols;
 let foodX;
 let foodY;
+let kiwiImg;
+let grapeImg;
 let appleImg;
+let cherryImg;
+let bananaImg;
 let circleImg;
 let difficulty; //maybe
 let length = 0;
+
 //snake is an array, when length increases one less element 
 //is turned into an open tile
 //how would collisions work
-let snake = [];
+
+// let snake = [{x:0, y:0}]
+//for (let segment of snake) generate circle shape
+//snake.push({loco of food})
+//snake.pop if no food
+
+let snake = [{x: 0, y: 0}];
 let direction = 4;
 let isAlive = true;
 let thePlayer = {
@@ -32,7 +44,6 @@ let thePlayer = {
 };
 const HEAD = 7;
 const FOOD = 9;
-const BODY = 8;
 const OPEN_TILE = 0;
 const GRID_SIZE = 50;
 const CLOSED_TILE = 1;
@@ -40,6 +51,10 @@ const CLOSED_TILE = 1;
 function preload() {
   circleImg = loadImage("circle.png");
   appleImg = loadImage("apple.png");
+  kiwiImg = loadImage("kiwi.png");
+  cherryImg = loadImage("cherry.png");
+  grapeImg = loadImage("grape.png");
+  bananaImg = loadImage("banana.png");
 }
 
 function setup() {
@@ -50,8 +65,9 @@ function setup() {
   //speed adjust
   frameRate(3);
   grid[thePlayer.y][thePlayer.x] = HEAD;
-  //for (i=0; i < number of food; i++){
-  generateFood();
+  for (i=0; i < 5; i++){
+    generateFood();
+  }
 }
 
 function draw() {
@@ -98,8 +114,6 @@ function keyPressed() {
 }
 
 function movePlayer(x, y) {
-  console.log("moving to:", x, y);
-  console.log(x, y, rows, cols);
   //checks if snake is in bounds
   if (x < 0 || y > rows - 1 || x > cols || y < 0) {
     //causes death
@@ -132,7 +146,7 @@ function displayGrid() {
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       if (grid[y][x] === CLOSED_TILE) {
-        //obsticles ??
+        //obsticals ??
         fill(241,253,124);
         square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
       }
@@ -145,8 +159,28 @@ function displayGrid() {
         //fill(234,244,255);
       }
       else if (grid[y][x] === FOOD) {
-        image(appleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-        //fill(184,122,135);
+        //chooses a random fruit
+        let choice= random(100);
+        if (choice > 80) {
+          //apple
+          image(appleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
+        else if (choice > 60) {
+          //banana
+          image(bananaImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
+        else if (choice > 40) {
+          //cherry
+          image(cherryImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
+        else if (choice > 20) {
+          //grape
+          image(grapeImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
+        else {
+          // kiwi
+          image(kiwiImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
       }
       else if (grid[y][x] === BODY) {
         fill(255,0,0);
