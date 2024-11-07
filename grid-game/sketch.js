@@ -11,12 +11,24 @@
 // music, difficulty, start, how to play
 // html elements for start screen
 // random fruit selects once
+// add obsticals if i have time (if difficulty is implimented)
+
+//current problems
+// snake does not grow !
+// food switches every frame ! check any file w random rgb
+// you lose screen very sad 
+// can still move after losing
+// only one food regenerates?? !
+// no start screen
+// speed is literally just frame rate ! dx dy?
+// player moves off right
 
 let grid;
 let rows;
 let cols;
 let foodX;
 let foodY;
+let choice;
 let kiwiImg;
 let grapeImg;
 let appleImg;
@@ -78,6 +90,10 @@ function draw() {
 
 function snakeMoving() {
   //keeps the snake moving that direction
+
+  //if state is 1 state cannot be 3 and vice versa
+  //if state is 4 state cannot be 2 and vice versa
+
   if (direction === 1) {
     movePlayer(thePlayer.x + 1 , thePlayer.y);
   }
@@ -131,7 +147,8 @@ function movePlayer(x, y) {
   }
 
   //check if the player is on the same square as the food
-  if (foodX === thePlayer.x && foodY === thePlayer.y) {
+  //if the players location is on a food tile
+  if (grid[thePlayer.y][thePlayer.x] === FOOD) {
     length += 1;
     generateFood();
   }
@@ -160,7 +177,7 @@ function displayGrid() {
       }
       else if (grid[y][x] === FOOD) {
         //chooses a random fruit
-        let choice= random(100);
+        choice = random(100);
         if (choice > 80) {
           //apple
           image(appleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
