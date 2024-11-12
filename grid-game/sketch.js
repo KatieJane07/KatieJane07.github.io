@@ -10,15 +10,12 @@
 // add start screen 
 // music, difficulty, start, how to play
 // html elements for start screen
-// random fruit selects once
-// add obsticals if i have time (if difficulty is implimented)
+// add obsticles if i have time (if difficulty is implimented)
 
 //current problems
 // snake does not grow !
-// food switches every frame ! check any file w random rgb
-// you lose screen very sad 
+// you lose screen very sad -add score aka length
 // can still move after losing
-// only one food regenerates?? !
 // no start screen
 // speed is literally just frame rate ! dx dy?
 // player moves off right
@@ -44,7 +41,7 @@ let length = 0;
 
 // let snake = [{x:0, y:0}]
 //for (let segment of snake) generate circle shape
-//snake.push({loco of food})
+//snake.push({loco of food}) or like just dont pop
 //snake.pop if no food
 
 let snake = [{x: 0, y: 0}];
@@ -61,12 +58,12 @@ const GRID_SIZE = 50;
 const CLOSED_TILE = 1;
 
 function preload() {
-  circleImg = loadImage("circle.png");
-  appleImg = loadImage("apple.png");
   kiwiImg = loadImage("kiwi.png");
-  cherryImg = loadImage("cherry.png");
+  appleImg = loadImage("apple.png");
   grapeImg = loadImage("grape.png");
   bananaImg = loadImage("banana.png");
+  cherryImg = loadImage("cherry.png");
+  circleImg = loadImage("circle.png");
 }
 
 function setup() {
@@ -77,9 +74,10 @@ function setup() {
   //speed adjust
   frameRate(3);
   grid[thePlayer.y][thePlayer.x] = HEAD;
-  for (i=0; i < 5; i++){
-    generateFood();
-  }
+
+  generateFood();
+  //chooses random fruit
+  choice = random(100);
 }
 
 function draw() {
@@ -91,8 +89,6 @@ function draw() {
 function snakeMoving() {
   //keeps the snake moving that direction
 
-  //if state is 1 state cannot be 3 and vice versa
-  //if state is 4 state cannot be 2 and vice versa
 
   if (direction === 1) {
     movePlayer(thePlayer.x + 1 , thePlayer.y);
@@ -111,22 +107,45 @@ function snakeMoving() {
     //end sequence
     fill(0);
     text("loser", 200, 200);
+    text("you had a length of ", 200, 250);
+    text(length, 308,250);
   }
 }
 
 function keyPressed() {
   if (key === "w") {
+    //snake cannot reverse direction
+    //if (state !== 4){
     direction = 2;
+    //}
+    // else {
+    //   state = 4;
+    // }
   }
   if (key === "s") {
+    //if (state !== 2){
     direction = 4;
+    //}
+    // else {
+    //   state = 2;
+    // }
   }
   if (key === "a") {
+    //if (state !== 1) {
     direction = 3;
+    //}
+    // else {
+    //   state = 1;
+    // }
   }
   if (key === "d") {
+    //if (state !== 3) {
     direction = 1;
   }
+  // else {
+  //   state = 3;
+  // }
+  //}
 }
 
 function movePlayer(x, y) {
@@ -148,9 +167,10 @@ function movePlayer(x, y) {
 
   //check if the player is on the same square as the food
   //if the players location is on a food tile
-  if (grid[thePlayer.y][thePlayer.x] === FOOD) {
+  if (grid[thePlayer.y][thePlayer.x] === grid[foodY][foodX]) {
     length += 1;
     generateFood();
+    choice = random(100);
   }
 
   //checks if player runs into itself
@@ -177,7 +197,6 @@ function displayGrid() {
       }
       else if (grid[y][x] === FOOD) {
         //chooses a random fruit
-        choice = random(100);
         if (choice > 80) {
           //apple
           image(appleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
