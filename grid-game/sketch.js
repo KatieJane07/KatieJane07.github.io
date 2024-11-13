@@ -1,6 +1,6 @@
 // Snake
 // Katie Strawson
-// November 12th 2024
+// November 14th 2024
 // Extra for Experts
 // uhmmmmm
 
@@ -10,14 +10,13 @@
 // add start screen 
 // music, difficulty, start, how to play
 // html elements for start screen
-// add obsticles if i have time (if difficulty is implimented)
+// add obstacles if i have time (if difficulty is implimented)
 
 //current problems
 // snake does not grow !
-// you lose screen very sad -add score aka length
+// you lose screen very sad
 // can still move after losing
 // no start screen
-// speed is literally just frame rate ! dx dy?
 // player moves off right
 
 let grid;
@@ -47,11 +46,11 @@ let length = 0;
 let snake = [{x: 0, y: 0}];
 let direction = 4;
 let isAlive = true;
-let thePlayer = {
-  x: 0,
-  y: 0,
-};
-const HEAD = 7;
+// let thePlayer = {
+//   x: 0,
+//   y: 0,
+// };
+// const HEAD = 7;
 const FOOD = 9;
 const OPEN_TILE = 0;
 const GRID_SIZE = 50;
@@ -107,45 +106,40 @@ function snakeMoving() {
     //end sequence
     fill(0);
     text("loser", 200, 200);
-    text("you had a length of ", 200, 250);
-    text(length, 308,250);
+    text("you had a length of " + length, 200, 250);
+  }
+
+  for (let segment in snake) {
+    //draw segement x y
+    image(circleImg, segment.x * GRID_SIZE, segment.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
   }
 }
 
 function keyPressed() {
   if (key === "w") {
     //snake cannot reverse direction
-    //if (state !== 4){
-    direction = 2;
-    //}
-    // else {
-    //   state = 4;
-    // }
+    if (direction !== 4){
+      direction = 2;
+    }
+
   }
   if (key === "s") {
-    //if (state !== 2){
-    direction = 4;
-    //}
-    // else {
-    //   state = 2;
-    // }
+    if (direction !== 2){
+      direction = 4;
+    }
+  
   }
   if (key === "a") {
-    //if (state !== 1) {
-    direction = 3;
-    //}
-    // else {
-    //   state = 1;
-    // }
+    if (direction !== 1) {
+      direction = 3;
+    }
+    
   }
   if (key === "d") {
-    //if (state !== 3) {
-    direction = 1;
+    if (direction !== 3) {
+      direction = 1;
+    }
   }
-  // else {
-  //   state = 3;
-  // }
-  //}
 }
 
 function movePlayer(x, y) {
@@ -172,7 +166,10 @@ function movePlayer(x, y) {
     generateFood();
     choice = random(100);
   }
-
+  else {
+    snake.push({thePlayer.x, thePlayer.y})
+    snake.pop(0,1);
+  }
   //checks if player runs into itself
   // if player.x and player. y equals any body x y
   //isAlive = false;
@@ -191,10 +188,10 @@ function displayGrid() {
         fill(144,231,244);
         square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
       }
-      else if (grid[y][x] === HEAD) {
-        image(circleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-        //fill(234,244,255);
-      }
+      // else if (grid[y][x] === HEAD) {
+      //   image(circleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+      //   //fill(234,244,255);
+      // }
       else if (grid[y][x] === FOOD) {
         //chooses a random fruit
         if (choice > 80) {
@@ -243,3 +240,4 @@ function generateFood() {
   foodY = Math.floor(random(height)/GRID_SIZE);
   grid[foodY][foodX] = FOOD;
 }
+

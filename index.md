@@ -14,6 +14,7 @@
 - [game of life](game-of-life)
 - [rectangular grid](rect-grid)
 - [moving character in grid](moving-grid)
+- [Walker OOP](walker-oop)
 
 
 ## Projects
