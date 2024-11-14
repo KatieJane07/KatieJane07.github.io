@@ -1,9 +1,4 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+//walker oop
 
 class Walker {
   constructor(x,y,colour) {
@@ -41,19 +36,23 @@ class Walker {
   }
 }
 
-let winston;
-let joti;
+let walkerArray =[];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  winston = new Walker(windowWidth/2, windowHeight/2, "pink");
-  joti = new Walker(width/2,height/2,"magenta");
 }
 
 
 function draw() {
-  winston.move();
-  joti.move();
-  winston.display();
-  joti.display();
+  for (let theWalker of walkerArray) {
+    theWalker.move();
+    theWalker.display();
+  }
+}
+
+function mousePressed() {
+  let randomColour = color(random(255),random(255),random(255));
+
+  let someWalker = new Walker(mouseX, mouseY, randomColour);
+  walkerArray.push(someWalker);
 }

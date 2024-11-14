@@ -4,20 +4,8 @@
 // Extra for Experts
 // uhmmmmm
 
-//to do
-// add body length increase
-// add collisions with body
-// add start screen 
-// music, difficulty, start, how to play
-// html elements for start screen
-// add obstacles if i have time (if difficulty is implimented)
-
 //current problems
-// snake does not grow !
-// you lose screen very sad
-// can still move after losing
-// no start screen
-// player moves off right
+// snake does not spawn !
 
 let grid;
 let rows;
@@ -31,7 +19,6 @@ let appleImg;
 let cherryImg;
 let bananaImg;
 let circleImg;
-let difficulty; //maybe
 let length = 0;
 
 //snake is an array, when length increases one less element 
@@ -43,18 +30,17 @@ let length = 0;
 //snake.push({loco of food}) or like just dont pop
 //snake.pop if no food
 
-let snake = [{x: 0, y: 0}];
+let snake = [{x: 1, y: 1}];
 let direction = 4;
 let isAlive = true;
-// let thePlayer = {
-//   x: 0,
-//   y: 0,
-// };
+let thePlayer = {
+  x: 0,
+  y: 0,
+};
 // const HEAD = 7;
 const FOOD = 9;
 const OPEN_TILE = 0;
 const GRID_SIZE = 50;
-const CLOSED_TILE = 1;
 
 function preload() {
   kiwiImg = loadImage("kiwi.png");
@@ -72,7 +58,7 @@ function setup() {
   grid = generateEmptyGrid(cols, rows);
   //speed adjust
   frameRate(3);
-  grid[thePlayer.y][thePlayer.x] = HEAD;
+  //grid[thePlayer.y][thePlayer.x] = HEAD;
 
   generateFood();
   //chooses random fruit
@@ -82,24 +68,36 @@ function setup() {
 function draw() {
   background(144,231,244);
   displayGrid();
+  displaySnake();
   snakeMoving();
 }
 
 function snakeMoving() {
   //keeps the snake moving that direction
-
+  // let x;
+  // let y;
+  // snake[snake.length-1].x = x;
+  // snake[snake.length-1].y = y;
 
   if (direction === 1) {
-    movePlayer(thePlayer.x + 1 , thePlayer.y);
+    movePlayer(snake[snake.length-1].x + 1 , snake[snake.length-1].y);
+    snake.push({x, y});
+    snake.pop(0,1);
   }
   if (direction === 2) {
-    movePlayer(thePlayer.x , thePlayer.y - 1);
+    movePlayer(snake[snake.length-1].x, snake[snake.length-1].y -1);
+    snake.push({x, y});
+    snake.pop(0,1);
   }
   if (direction === 3) {
-    movePlayer(thePlayer.x - 1 , thePlayer.y);
+    movePlayer(snake[snake.length-1].x - 1 , snake[snake.length-1].y);
+    snake.push({x, y});
+    snake.pop(0,1);
   }
   if (direction === 4) {
-    movePlayer(thePlayer.x , thePlayer.y + 1);
+    movePlayer(snake[snake.length-1].x, snake[snake.length-1].y + 1);
+    snake.push({x, y});
+    snake.pop(0,1);
   }
 
   if (isAlive === false) {
@@ -109,10 +107,6 @@ function snakeMoving() {
     text("you had a length of " + length, 200, 250);
   }
 
-  for (let segment in snake) {
-    //draw segement x y
-    image(circleImg, segment.x * GRID_SIZE, segment.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-  }
 }
 
 function keyPressed() {
@@ -142,6 +136,13 @@ function keyPressed() {
   }
 }
 
+function displaySnake() {
+  for (let segment of snake) {
+    //draw segement x y
+    image(circleImg, segment.x * GRID_SIZE, segment.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+  }
+
+}
 function movePlayer(x, y) {
   //checks if snake is in bounds
   if (x < 0 || y > rows - 1 || x > cols || y < 0) {
@@ -151,40 +152,46 @@ function movePlayer(x, y) {
 
   else {
     //move snake
-    let oldX = thePlayer.x;
-    let oldY = thePlayer.y;
-    thePlayer.x = x;
-    thePlayer.y = y;
-    grid[oldY][oldX] = OPEN_TILE;
-    grid[thePlayer.y][thePlayer.x] = HEAD;
+    // let oldX = thePlayer.x;
+    // let oldY = thePlayer.y;
+
+    // diff var x y = segements
+
+    // grid[oldY][oldX] = OPEN_TILE;
+    // grid[thePlayer.y][thePlayer.x] = HEAD;
   }
 
   //check if the player is on the same square as the food
   //if the players location is on a food tile
-  if (grid[thePlayer.y][thePlayer.x] === grid[foodY][foodX]) {
+
+  //diff var
+  if (x === foodX && y === foodY) {
     length += 1;
     generateFood();
     choice = random(100);
   }
-  else {
-    snake.push({thePlayer.x, thePlayer.y})
-    snake.pop(0,1);
+    
+  if (checkDuplicates(snake) === true) {
+    isAlive = false;
   }
-  //checks if player runs into itself
-  // if player.x and player. y equals any body x y
-  //isAlive = false;
 
+}
+
+function checkDuplicates (array){
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j <array.length; j++) {
+      if (array[i] === array[j]) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function displayGrid() {
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
-      if (grid[y][x] === CLOSED_TILE) {
-        //obsticals ??
-        fill(241,253,124);
-        square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
-      }
-      else if (grid[y][x] === OPEN_TILE) {
+      if (grid[y][x] === OPEN_TILE) {
         fill(144,231,244);
         square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
       }
@@ -214,9 +221,6 @@ function displayGrid() {
           // kiwi
           image(kiwiImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
         }
-      }
-      else if (grid[y][x] === BODY) {
-        fill(255,0,0);
       }
     }
   }
