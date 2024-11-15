@@ -4,7 +4,6 @@
 // Extra for Experts
 // Coordinate arrays -> array of objects
 // template literals
-// 
 
 let grid;
 let rows;
@@ -12,12 +11,7 @@ let cols;
 let foodX;
 let foodY;
 let choice;
-let kiwiImg;
-let grapeImg;
-let appleImg;
-let cherryImg;
-let bananaImg;
-let circleImg;
+let speed = 3;
 let length = 0;
 let snake = [{x: 1, y: 1}];
 let direction = 4;
@@ -26,9 +20,18 @@ let thePlayer = {
   x: 0,
   y: 0,
 };
+
 const FOOD = 9;
 const OPEN_TILE = 0;
-const GRID_SIZE = 50;
+const GRID_SIZE = 70;
+
+let kiwiImg;
+let grapeImg;
+let appleImg;
+let cherryImg;
+let bananaImg;
+let circleImg;
+let bodyImg;
 
 function preload() {
   kiwiImg = loadImage("kiwi.png");
@@ -37,6 +40,7 @@ function preload() {
   bananaImg = loadImage("banana.png");
   cherryImg = loadImage("cherry.png");
   circleImg = loadImage("circle.png");
+  bodyImg = loadImage("body.png");
 }
 
 function setup() {
@@ -44,8 +48,6 @@ function setup() {
   cols = Math.floor(width / GRID_SIZE);
   rows = Math.floor(height / GRID_SIZE);
   grid = generateEmptyGrid(cols, rows);
-  //speed adjust
-  frameRate(3);
 
   generateFood();
   //chooses random fruit
@@ -57,6 +59,8 @@ function draw() {
   displayGrid();
   displaySnake();
   snakeMoving();
+  //speed adjust
+  frameRate(speed);
 }
 
 function snakeMoving() {
@@ -68,7 +72,7 @@ function snakeMoving() {
   if (direction === 1) { 
     //Right
     x += 1;
-   }
+  }
   else if (direction === 2) {
     //Up
     y -= 1; 
@@ -93,7 +97,9 @@ function snakeMoving() {
     generateFood(); 
     //choose a random fruit
     choice = random(100); 
-  } else {
+    grid[y][x] = OPEN_TILE;
+  }
+  else {
     //removes tail
     snake.shift(); 
   }
@@ -101,8 +107,12 @@ function snakeMoving() {
   // Check if the snake is still alive
   if (!isAlive) {
     fill(0);
-    text("Game Over", 200, 200);
-    text("Final Length: " + length, 200, 250);
+    let size = width/10;
+    textSize(size);
+    stroke(144,231,244);
+    strokeWeight(40);
+    text("Game Over", 100, 100);
+    text("Final Length: " + length, 100, 100 + size);
     //end game
     noLoop(); 
   }
@@ -133,12 +143,20 @@ function keyPressed() {
       direction = 1;
     }
   }
+
+  if (keyCode === UP_ARROW) {
+    speed += 0.5;
+    
+  }
+  if (keyCode === DOWN_ARROW) {
+    speed -= 0.5;
+  }
 }
 
 function displaySnake() {
   for (let segment of snake) {
     //draw segement x y
-    image(circleImg, segment.x * GRID_SIZE, segment.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+    image(bodyImg, segment.x * GRID_SIZE, segment.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
   }
 
 }
@@ -180,10 +198,6 @@ function displayGrid() {
         fill(144,231,244);
         square(x * GRID_SIZE , y * GRID_SIZE , GRID_SIZE);
       }
-      // else if (grid[y][x] === HEAD) {
-      //   image(circleImg, x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-      //   //fill(234,244,255);
-      // }
       else if (grid[y][x] === FOOD) {
         //chooses a random fruit
         if (choice > 80) {
