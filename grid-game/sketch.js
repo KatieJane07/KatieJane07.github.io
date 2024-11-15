@@ -2,10 +2,9 @@
 // Katie Strawson
 // November 14th 2024
 // Extra for Experts
-// uhmmmmm
-
-//current problems
-// snake does not spawn !
+// Coordinate arrays -> array of objects
+// template literals
+// 
 
 let grid;
 let rows;
@@ -20,16 +19,6 @@ let cherryImg;
 let bananaImg;
 let circleImg;
 let length = 0;
-
-//snake is an array, when length increases one less element 
-//is turned into an open tile
-//how would collisions work
-
-// let snake = [{x:0, y:0}]
-//for (let segment of snake) generate circle shape
-//snake.push({loco of food}) or like just dont pop
-//snake.pop if no food
-
 let snake = [{x: 1, y: 1}];
 let direction = 4;
 let isAlive = true;
@@ -37,7 +26,6 @@ let thePlayer = {
   x: 0,
   y: 0,
 };
-// const HEAD = 7;
 const FOOD = 9;
 const OPEN_TILE = 0;
 const GRID_SIZE = 50;
@@ -58,7 +46,6 @@ function setup() {
   grid = generateEmptyGrid(cols, rows);
   //speed adjust
   frameRate(3);
-  //grid[thePlayer.y][thePlayer.x] = HEAD;
 
   generateFood();
   //chooses random fruit
@@ -73,40 +60,52 @@ function draw() {
 }
 
 function snakeMoving() {
-  //keeps the snake moving that direction
-  // let x;
-  // let y;
-  // snake[snake.length-1].x = x;
-  // snake[snake.length-1].y = y;
+  // Get the current head position
+  let x = snake[snake.length - 1].x;
+  let y = snake[snake.length - 1].y;
 
-  if (direction === 1) {
-    movePlayer(snake[snake.length-1].x + 1 , snake[snake.length-1].y);
-    snake.push({x, y});
-    snake.pop(0,1);
+  // Update x and y based on the direction
+  if (direction === 1) { 
+    //Right
+    x += 1;
+   }
+  else if (direction === 2) {
+    //Up
+    y -= 1; 
   }
-  if (direction === 2) {
-    movePlayer(snake[snake.length-1].x, snake[snake.length-1].y -1);
-    snake.push({x, y});
-    snake.pop(0,1);
+  else if (direction === 3) {
+    //Left
+    x -= 1;
   }
-  if (direction === 3) {
-    movePlayer(snake[snake.length-1].x - 1 , snake[snake.length-1].y);
-    snake.push({x, y});
-    snake.pop(0,1);
-  }
-  if (direction === 4) {
-    movePlayer(snake[snake.length-1].x, snake[snake.length-1].y + 1);
-    snake.push({x, y});
-    snake.pop(0,1);
+  else if (direction === 4) {
+    //Down
+    y += 1;
   }
 
-  if (isAlive === false) {
-    //end sequence
+  movePlayer(x, y);
+  // add segement
+  snake.push({ x, y });
+
+  // Check for food
+  if (x === foodX && y === foodY) {
+    //length is basically score
+    length += 1;
+    generateFood(); 
+    //choose a random fruit
+    choice = random(100); 
+  } else {
+    //removes tail
+    snake.shift(); 
+  }
+
+  // Check if the snake is still alive
+  if (!isAlive) {
     fill(0);
-    text("loser", 200, 200);
-    text("you had a length of " + length, 200, 250);
+    text("Game Over", 200, 200);
+    text("Final Length: " + length, 200, 250);
+    //end game
+    noLoop(); 
   }
-
 }
 
 function keyPressed() {
@@ -143,46 +142,32 @@ function displaySnake() {
   }
 
 }
+
 function movePlayer(x, y) {
-  //checks if snake is in bounds
-  if (x < 0 || y > rows - 1 || x > cols || y < 0) {
-    //causes death
+  // Check if the new position is out of bounds
+  if (x < 0 || x >= cols || y < 0 || y >= rows) {
     isAlive = false;
+    return;
   }
 
-  else {
-    //move snake
-    // let oldX = thePlayer.x;
-    // let oldY = thePlayer.y;
-
-    // diff var x y = segements
-
-    // grid[oldY][oldX] = OPEN_TILE;
-    // grid[thePlayer.y][thePlayer.x] = HEAD;
+  // Check for collision with itself
+  for (let segment of snake) {
+    if (segment.x === x && segment.y === y) {
+      isAlive = false;
+      return;
+    }
   }
-
-  //check if the player is on the same square as the food
-  //if the players location is on a food tile
-
-  //diff var
-  if (x === foodX && y === foodY) {
-    length += 1;
-    generateFood();
-    choice = random(100);
-  }
-    
-  if (checkDuplicates(snake) === true) {
-    isAlive = false;
-  }
-
 }
 
-function checkDuplicates (array){
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j <array.length; j++) {
-      if (array[i] === array[j]) {
-        return true;
-      }
+
+function checkDuplicates(array) {
+  // Check if any two segments share the same coordinates
+  // Checks if snake runs into itself
+  let seen = {};
+  for (let segment of array) {
+    let coords = `${segment.x},${segment.y}`;
+    if (seen[coords]) {
+      return true;
     }
   }
   return false;
