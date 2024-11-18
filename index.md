@@ -15,6 +15,7 @@
 - [rectangular grid](rect-grid)
 - [moving character in grid](moving-grid)
 - [Walker OOP](walker-oop)
+- [Firework OOP](fireworks)
 
 
 ## Projects
