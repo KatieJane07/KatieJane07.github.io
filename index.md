@@ -17,6 +17,7 @@
 - [Walker OOP](walker-oop)
 - [Firework OOP](fireworks)
 - [collide2d library](collide)
+- [clicker demo](clicker)
 
 
 ## Projects
