@@ -9,7 +9,7 @@
 - [Perlin Noise Ball](noise-ball)
 - [Terrain Generation](terrain-gen)
 - [Bubble Pop](bubble)
-- [trnalsate/rotate](translate)
+- [translate/rotate](translate)
 - [grid demo](2d-array)
 - [game of life](game-of-life)
 - [rectangular grid](rect-grid)
@@ -18,6 +18,7 @@
 - [Firework OOP](fireworks)
 - [collide2d library](collide)
 - [clicker demo](clicker)
+- [oop inheritance](oop-inheritance)
 
 
 ## Projects
