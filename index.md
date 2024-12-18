@@ -19,7 +19,8 @@
 - [collide2d library](collide)
 - [clicker demo](clicker)
 - [oop inheritance](oop-inheritance)
-- [map demo](maps-demo)
+- [recursion demo](recursion-demo)
+- [sierpinksi triangle](triangle)
 
 
 ## Projects

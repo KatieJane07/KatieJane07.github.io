@@ -12,4 +12,13 @@ function setup() {
 
 function draw() {
   background(220);
+  recursiveCircle(width/2,height/2,mouseX+100);
+}
+
+function recursiveCircle(x, y, radius) {
+  circle(x,y,radius*2);
+  if (radius > 5) {
+    recursiveCircle(x + radius/2,y,radius/2);
+    recursiveCircle(x - radius/2,y,radius/2);
+  }
 }
