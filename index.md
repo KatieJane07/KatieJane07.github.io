@@ -21,6 +21,7 @@
 - [oop inheritance](oop-inheritance)
 - [recursion demo](recursion-demo)
 - [sierpinksi triangle](triangle)
+- [video testing](video-test)
 
 
 ## Projects
