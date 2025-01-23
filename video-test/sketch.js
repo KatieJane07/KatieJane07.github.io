@@ -1,27 +1,46 @@
 
 let video;
-let playing = false;
+let scene = "two"
+show = false;
+playing = false;
+
 
 function setup() {
-  createCanvas(710, 400);
-
+  createCanvas(400, 600);
   video = createVideo("catLove.mov");
-
-  video.hide();
 }
 
 function draw() {
+  showVideo();
   background(240);
-  image(video, 10, 10, 200, 300);
-
+  image(video, 10, 10, 400, 600);
+  if (keyIsPressed && keyCode === 32) {
+    scene = "one";
+  }
 }
 
 function mousePressed() {
-  if (playing) {
-    video.pause();
-  } else {
+  if (scene === "one") {
+    if (playing === false) {
+      show = true;
+      playing = true;
+
+    }
+    else {
+      scene = "two"
+      video.pause();
+      show = false;
+    }
+  }
+  console.log(scene);
+}
+
+function showVideo() {
+  if (show === true) {
     video.loop();
   }
-
-  playing = !playing;
+  else {
+    //console.log("ahh");
+    video.hide();
+  }
 }
